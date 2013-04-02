@@ -70,7 +70,7 @@ public class Report extends Activity
         
     }
 	
-	
+	//getImage runs network connections on a separate thread to appease Android
 	class getImage extends AsyncTask<String, Void, String> {
 
 	    private Exception exception;
@@ -89,6 +89,7 @@ public class Report extends Activity
 	        HttpClient httpclient = AndroidHttpClient.newInstance("Android");
 	        HttpPost httppost = new HttpPost("http://traffichistory.co.nf/mapImaging.php");
 	        
+	        //key pairs match up with server script to send & receive data
 
 	        try {
 	            // Add your data
@@ -100,6 +101,8 @@ public class Report extends Activity
 	            // Execute HTTP Post Request
 	            HttpResponse response = httpclient.execute(httppost);
 	            HttpEntity result = response.getEntity();
+	            
+	            //get the message data as a bytestream and convert to string to parse URL
 	            
 	            InputStream is = result.getContent();
 	       
@@ -147,7 +150,8 @@ public class Report extends Activity
 
 
 
-
+//currently called when user presses button to obtain report
+//runs a separate thread to handle network communication
 public void postData(View v) 
 {
 	
@@ -200,9 +204,9 @@ public void postData(View v)
     */
 
 	String s1="";
-	new getImage().execute(s1,null,str3);
+	new getImage().execute(s1,null,str3); //call getImage to update str3 to image URL
 	
-        
+        //from the image URL, obtain the image and set it to display on the ImageView
         try {
         	  ImageView i = (ImageView)findViewById(R.id.imageView1);
         	  Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(str3).getContent());
@@ -228,7 +232,7 @@ public void postData(View v)
 } 
 
 
-
+//postData2 was an attempt to run the entire image get & set process in a separate thread
 public void postData2(View v){
 	
 	class getImage extends AsyncTask<String, Void, String> {
