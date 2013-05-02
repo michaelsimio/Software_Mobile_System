@@ -76,10 +76,10 @@ public class Submit extends Activity implements LocationListener
         
         // Get the location manager
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // Define the criteria how to select the locatioin provider -> use
+        // Define the criteria how to select the location provider -> use
         // default
         Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
+        provider = locationManager.getBestProvider(criteria, false); 
         Location location = locationManager.getLastKnownLocation(provider);
 
         // Initialize the location fields
@@ -165,33 +165,32 @@ public class Submit extends Activity implements LocationListener
 	    	tv.setText("1");
 	    }
 	    
+	    // to submit to the website, the keys to add to the params are, in order:
+	    // zipcode, street, severity, county, state, shortDes, lat, long
+	    // where shortDes is a String of up to 50 characters describing the incident
+	    // we can hardcode it to just be "MOBILE" for now, to show in the database that
+	    // the traffic incident was reported from a phone
 	    
-	    
-	    
-	    
-	    
-	    try 
+	    try
 	    {
-	        HttpClient client = new DefaultHttpClient();  
-	        String postURL = "http://traffichistory.com/mapImaging.php";
-	        HttpPost post = new HttpPost(postURL);
-	        List<NameValuePair> params = new ArrayList<NameValuePair>();
-	        params.add(new BasicNameValuePair("zipcode", zipcode));   
-	        UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params,HTTP.UTF_8);
-	        post.setEntity(ent);
-	        HttpResponse responsePOST = client.execute(post);  
-	        HttpEntity resEntity = responsePOST.getEntity();  
-	        if (resEntity != null) 
-	        {    
-	        	Log.i("RESPONSE",EntityUtils.toString(resEntity));
-	        }
-	    } 
-	    catch (Exception e2) 
-	    {
-	        e2.printStackTrace();
+	    	HttpClient client = new DefaultHttpClient();
+	    	String postURL = "http://traffichistory.org/mobileReport.php";
+	    	HttpPost post = new HttpPost(postURL);
+	    	List<NameValuePair> params = new ArrayList<NameValuePair>();
+	    	params.add(new BasicNameValuePair("zipcode", zipcode));
+	    	UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params,HTTP.UTF_8);
+	    	post.setEntity(ent);
+	    	HttpResponse responsePOST = client.execute(post);
+	    	HttpEntity resEntity = responsePOST.getEntity();
+	    	if (resEntity != null)
+	    	{
+	    		Log.i("RESPONSE",EntityUtils.toString(resEntity));
+	    	}
 	    }
-	    
-	    
+	    catch (Exception e2)
+	    {
+	    	e2.printStackTrace();
+	    }
 	    
 	    
 	    
