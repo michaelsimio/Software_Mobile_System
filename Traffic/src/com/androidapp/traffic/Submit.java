@@ -54,7 +54,10 @@ public class Submit extends Activity implements LocationListener
 	double lng;
 	
 	String zipcode;
-	
+	String street;
+	int severity;
+	String county, state;
+	String shortDes = "REPORTED FROM MOBILE";
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) 
@@ -79,7 +82,7 @@ public class Submit extends Activity implements LocationListener
         // Define the criteria how to select the location provider -> use
         // default
         Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false); 
+        provider = locationManager.getBestProvider(criteria, true); 
         Location location = locationManager.getLastKnownLocation(provider);
 
         // Initialize the location fields
@@ -89,8 +92,8 @@ public class Submit extends Activity implements LocationListener
           onLocationChanged(location);
         } else 
         {
-          latitude.setText("Location not available");
-          longitude.setText("Location not available");
+          latitude.setText("Latitude not available");
+          longitude.setText("Longitude not available");
         }
         
         
@@ -100,7 +103,7 @@ public class Submit extends Activity implements LocationListener
         {
         	List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
 
-        	if(addresses != null) 
+        	if((addresses != null) & (addresses.size()>0) ) 
         	{
         		Address returnedAddress = addresses.get(0);
         		StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
@@ -143,23 +146,29 @@ public class Submit extends Activity implements LocationListener
 	    if(a==true)
 	    {
 	    	tv.setText("1");
+	    	severity=1;
 	    }
 	    else if(b==true)
 	    {
 	    	tv.setText("2");
+	    	severity=2;
 	    }
 	    else if(c==true)
 	    {
 	    	tv.setText("3");
+	    	severity=3;
 	    }
 	    else if(d==true)
 	    {
 	    	tv.setText("4");
+	    	severity=4;
 	    }
 	    else if(e==true)
 	    {
 	    	tv.setText("5");
+	    	severity=5;
 	    }
+	    // the below else is unnecessary?
 	    else 
 	    {
 	    	tv.setText("1");
@@ -178,6 +187,13 @@ public class Submit extends Activity implements LocationListener
 	    	HttpPost post = new HttpPost(postURL);
 	    	List<NameValuePair> params = new ArrayList<NameValuePair>();
 	    	params.add(new BasicNameValuePair("zipcode", zipcode));
+	    	//params.add(new BasicNameValuePair("street", street));
+	    	//params.add(new BasicNameValuePair("severity", severity));
+	    	//params.add(new BasicNameValuePair("county", county));
+	    	//params.add(new BasicNameValuePair("state", state));
+	    	//params.add(new BasicNameValuePair("shortDes", shortDes));
+	    	//params.add(new BasicNameValuePair("lat", lat));
+	    	//params.add(new BasicNameValuePair("long", lng));
 	    	UrlEncodedFormEntity ent = new UrlEncodedFormEntity(params,HTTP.UTF_8);
 	    	post.setEntity(ent);
 	    	HttpResponse responsePOST = client.execute(post);
