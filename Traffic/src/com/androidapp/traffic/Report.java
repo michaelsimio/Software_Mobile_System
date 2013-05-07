@@ -41,7 +41,7 @@ public class Report extends Activity
 
 
 	//String str3="";
-
+	TextView tv;
 
 
 	@Override
@@ -55,7 +55,9 @@ public class Report extends Activity
 		sp1 = (Spinner) findViewById(R.id.spinner1);
 		sp2 = (Spinner) findViewById(R.id.spinner2);
 		iv = (ImageView) findViewById(R.id.imageView1);
-
+		
+		
+		tv = (TextView) findViewById(R.id.textView1);
 
 
 
@@ -179,12 +181,14 @@ public class Report extends Activity
 
 
 				try {
+					final String temp = str;
+					
 					final ImageView i = (ImageView)findViewById(R.id.imageView1);
 					final Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(str4).getContent());
 					runOnUiThread(new Runnable() {
 					     public void run() {
 					//stuff that updates ui
-								i.setImageBitmap(bitmap); 
+								i.setImageBitmap(bitmap);
 					    }
 					});
 				} catch (MalformedURLException e) {
