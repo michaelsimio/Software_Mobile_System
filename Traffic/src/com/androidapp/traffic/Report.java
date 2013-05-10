@@ -186,9 +186,16 @@ public class Report extends Activity
 				}
 
 				is.close();
-
-				String str = buffer.toString();
-
+				final String str = buffer.toString();
+				
+				runOnUiThread(new Runnable() {
+				     public void run() {
+				//stuff that updates ui
+							//tv.setText(str);
+				    }
+				});
+				
+				/*
 				int temp1 = str.indexOf("h");
 
 				String str2 = str.substring(temp1+1);
@@ -200,13 +207,16 @@ public class Report extends Activity
 				int temp3 = str3.indexOf("'");
 
 				String str4 = str3.substring(0,temp3);
-
-
-				try {
-					final String temp = str;
-					
+				*/
+				
+				int t1 = str.indexOf("src=");
+				String temp = str.substring(t1+6);
+				int t2 = temp.indexOf("alt=");
+				temp = temp.substring(0,t2-2);
+				
+				try {					
 					final ImageView i = (ImageView)findViewById(R.id.imageView1);
-					final Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(str4).getContent());
+					final Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(temp).getContent());
 					runOnUiThread(new Runnable() {
 					     public void run() {
 					//stuff that updates ui
@@ -307,7 +317,7 @@ public class Report extends Activity
 
 		// Create a new HttpClient and Post Header
 		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://traffichistory.co.nf/mapImaging.php");
+		HttpPost httppost = new HttpPost("http://traffichistory.org/mapImaging.php");
 
 		try {
 			// Add your data
