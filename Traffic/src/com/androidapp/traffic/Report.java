@@ -20,11 +20,13 @@ import org.apache.http.message.BasicNameValuePair;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.http.AndroidHttpClient;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -34,7 +36,8 @@ public class Report extends Activity
 {
 
 
-
+	Button b1;
+	
 	Spinner sp1;
 	Spinner sp2;
 	ImageView iv;
@@ -42,6 +45,8 @@ public class Report extends Activity
 
 	//String str3="";
 	TextView tv;
+	TextView tv2;
+	TextView tv3;
 
 
 	@Override
@@ -58,6 +63,13 @@ public class Report extends Activity
 		
 		
 		tv = (TextView) findViewById(R.id.textView1);
+		tv2= (TextView) findViewById(R.id.TextView01);
+		tv3 = (TextView) findViewById(R.id.textView2);
+		
+		b1 = (Button) findViewById(R.id.button1);
+		
+		
+		
 
 
 
@@ -74,7 +86,17 @@ public class Report extends Activity
 
 
 		iv.setImageResource(android.R.color.transparent);
-
+		
+		Typeface clouds = Typeface.createFromAsset(getAssets(), "contm.ttf");
+        
+        
+        tv.setTypeface(clouds);
+        tv2.setTypeface(clouds);
+        tv3.setTypeface(clouds);
+        b1.setTypeface(clouds);
+        tv.setTextColor(Color.WHITE);
+        tv2.setTextColor(Color.WHITE);
+        tv3.setTextColor(Color.WHITE);
 
 
 	}
